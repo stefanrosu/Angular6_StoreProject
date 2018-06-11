@@ -1,12 +1,11 @@
 import { Recipe } from './recipe.model';
-import { EventEmitter, Injectable } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { Ingredient } from '../shared/ingredient.model';
 import { ShoppingListService } from '../shopping-list/shopping-list.service';
 
 @Injectable()
 
 export class RecipeService{
-  recipeSelected = new EventEmitter<Recipe>(); 
   private recipes: Recipe[] = [
   new Recipe('Schintzel','Description 1','https://www.retetecalamama.ro/wp-content/uploads/2009/03/snitel-de-porc-in-pesmet-reteta-snitel-traditionala.jpg',[
     new Ingredient('Meat',1),new Ingredient('Fries',20)
