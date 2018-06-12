@@ -2,10 +2,12 @@ import { Recipe } from './recipe.model';
 import { Injectable } from '@angular/core';
 import { Ingredient } from '../shared/ingredient.model';
 import { ShoppingListService } from '../shopping-list/shopping-list.service';
+import { Subject } from 'rxjs';
 
 @Injectable()
 
 export class RecipeService{
+  recipeChanged = new Subject<Recipe[]>();
   private recipes: Recipe[] = [
   new Recipe('Schintzel','Description 1','https://www.retetecalamama.ro/wp-content/uploads/2009/03/snitel-de-porc-in-pesmet-reteta-snitel-traditionala.jpg',[
     new Ingredient('Meat',1),new Ingredient('Fries',20)
@@ -26,5 +28,17 @@ export class RecipeService{
   }
   addIngredientsToShoppingList(ingredients: Ingredient[]){
     this.slService.addIngredients(ingredients);
+  }
+  addRecipe(recipe:Recipe){
+    this.recipes.push(recipe);
+    this.recipeChanged.next(this.recipes.slice());
+  }
+  updateRecipe(index: number, newRecipe: Recipe){
+    this.recipes[index] = newRecipe;
+    this.recipeChanged.next(this.recipes.slice());
+  }
+  deleteRecipe(index: number){
+    this.recipes.splice(index,1);
+    this.recipeChanged.next(this.recipes.slice());
   }
 }
